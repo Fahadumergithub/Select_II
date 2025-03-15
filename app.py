@@ -1,13 +1,9 @@
 import streamlit as st
 import json
 import google.generativeai as genai
-import os
 
-# Configure Gemini API
-api_key = os.getenv("GEMINI_API_KEY")  # Read API key from environment variable
-if not api_key:
-    st.error("GEMINI_API_KEY environment variable is not set. Please configure it in Streamlit Cloud.")
-    st.stop()
+# Read API key from secrets.toml
+api_key = st.secrets["GEMINI_API_KEY"]
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel('gemini-pro')  # Use 'gemini-flash' if available
 
