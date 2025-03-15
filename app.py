@@ -85,4 +85,15 @@ def main():
     # Display chat history
     for message in st.session_state.chat_history:
         if message["role"] == "user":
-            st.write(f"**You:** {
+            st.write(f"**You:** {message['text']}")
+        else:
+            st.write(f"**Bot:** {message['text']}")
+
+    # Display JSON summary (if uploaded)
+    if uploaded_file:
+        st.header("JSON Summary")
+        st.json(test_data)
+
+# Run the app
+if __name__ == "__main__":
+    main()
