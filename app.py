@@ -2,10 +2,18 @@ import streamlit as st
 import json
 import google.generativeai as genai
 
-# Read API key from secrets.toml
+# Read API key and other environment variables from secrets.toml
 api_key = st.secrets["GEMINI_API_KEY"]
+app_name = st.secrets["APP_NAME"]
+environment = st.secrets["ENVIRONMENT"]
+
+# Configure Gemini API
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel('gemini-pro')  # Use 'gemini-flash' if available
+
+# Display app name and environment
+st.write(f"App Name: {app_name}")
+st.write(f"Environment: {environment}")
 
 # Risk stratification algorithm (SELECT I logic)
 def risk_stratification(data):
@@ -77,15 +85,4 @@ def main():
     # Display chat history
     for message in st.session_state.chat_history:
         if message["role"] == "user":
-            st.write(f"**You:** {message['text']}")
-        else:
-            st.write(f"**Bot:** {message['text']}")
-
-    # Display JSON summary (if uploaded)
-    if uploaded_file:
-        st.header("JSON Summary")
-        st.json(test_data)
-
-# Run the app
-if __name__ == "__main__":
-    main()
+            st.write(f"**You:** {
